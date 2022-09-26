@@ -68,7 +68,7 @@ function get_export_table(url::AbstractString, missingstring, buffer_in_memory::
     status = output[1, "file.status"]
     link = output[1, "file.link"]
     while status != "fresh"
-        output = get_table(url)
+        output = get_table(url, false)
         status = output[1, "file.status"]
         sleep(0.10)
     end

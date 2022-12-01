@@ -62,11 +62,18 @@ end
 """
     get_sep(;tick=missing, date=missing, daterange=(missing, missing), updatedate=missing, tabexport=true)
 
-Returns a DataFrame with the SEP price table.  Options to return a table for a single/list of tickers, a single date, a date range, or data updated since a given date.  Default behavior is to retrieve the entire SEP table as a file export to ensure all data is included.
+Returns a DataFrame with the SEP price table (daily equity prices).  Options to return a table for a single/list of tickers, a single date, a date range, or data updated since a given date.  Default behavior is to retrieve the entire SEP table as a file export to ensure all data is included.
 
 """
-
 get_sep(;tick=missing, date=missing, daterange=(missing, missing), updatedate=missing, tabexport=true) = get_daily_table("SEP", tick=tick, daterange=daterange, updatedate=updatedate, tabexport=tabexport)
+
+"""
+    get_sfp(;tick=missing, date=missing, daterange=(missing, missing), updatedate=missing, tabexport=true)
+
+Returns a DataFrame with the SFP price table (daily fund prices e.g. SPY).  Options to return a table for a single/list of tickers, a single date, a date range, or data updated since a given date.  Default behavior is to retrieve the entire SFP table as a file export to ensure all data is included.
+
+"""
+get_sfp(;tick=missing, date=missing, daterange=(missing, missing), updatedate=missing, tabexport=true) = get_daily_table("SFP", tick=tick, daterange=daterange, updatedate=updatedate, tabexport=tabexport)
 
 """
     get_fundamentals(;dimension=missing, tick=missing, tabexport=true)
@@ -77,6 +84,7 @@ function get_fundamentals(;dimension=missing, tick=missing, tabexport=true)
     url = reduceurls(formurlprefix("SF1", tabexport), maketickurl(tick), makedimurl(dimension), urlsuffix())
     get_table(url, tabexport)
 end
+
 """
     get_export_table(url::AbstractString; missingstring=[""], buffer_in_memory=false)
 
@@ -107,6 +115,7 @@ function get_table(url::AbstractString, tabexport::Bool; missingstring=["", "NA"
     return get_table(url, missingstring, buffer_in_memory)
 end
 
+include("alignprices.jl")
 
-export setkey, get_metadata
+export setkey, get_metadata, get_sep, get_sfp, get_daily_table, align_prices_and_changes
 end # module SharadarUtils

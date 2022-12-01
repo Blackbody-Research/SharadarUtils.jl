@@ -14,7 +14,11 @@ end
 
 #URL formation functions
 #returns proper url suffix with api key on demand
-urlsuffix() = "api_key=$key"
+function urlsuffix() 
+    isempty(key) && error("API key is empty")
+    "api_key=$key"
+end
+
 maketickurl(tick::AbstractString) = "ticker=$tick"
 maketickurl(::Missing) = missing
 maketickurl(ticks::Vector{T}) where T <: AbstractString = string("ticker=", reduce((a, b) -> "$a,$b", ticks))
@@ -118,4 +122,8 @@ end
 include("alignprices.jl")
 
 export setkey, get_metadata, get_sep, get_sfp, get_daily_table, align_prices_and_changes
+
+function __init__()
+    println("Use the `setkey` function to enter your API key prior to retrieving data.")
+end
 end # module SharadarUtils

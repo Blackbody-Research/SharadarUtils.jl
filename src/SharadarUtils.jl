@@ -1,6 +1,6 @@
 module SharadarUtils
 
-using HTTP, ZipFile, Dates, CSV, DataFrames
+using HTTP, ZipFile, Dates, CSV, DataFrames, Statistics
 
 global key = ""
 
